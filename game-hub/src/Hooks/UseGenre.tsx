@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
+
+import genres from "../data/Genre";
+
 export interface Genre {
   id: number;
   name: string;
@@ -17,25 +20,25 @@ const UseGenre = () => {
   const [Error, SetError] = useState("");
   const [isloading, setisloading] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    setisloading(true);
-    apiClient
-      .get<FetchGenresResponse>("/genres", { signal: controller.signal })
-      .then((res) => {
-        setGenres(res.data.results);
-        setisloading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        SetError(err.message);
-        setisloading(false);
-      });
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   setisloading(true);
+  //   apiClient
+  //     .get<FetchGenresResponse>("/genres", { signal: controller.signal })
+  //     .then((res) => {
+  //       setGenres(res.data.results);
+  //       setisloading(false);
+  //     })
+  //     .catch((err) => {
+  //       if (err instanceof CanceledError) return;
+  //       SetError(err.message);
+  //       setisloading(false);
+  //     });
 
-    return () => controller.abort();
-  }, []);
+  //   return () => controller.abort();
+  // }, []);
 
-  return { Genres, Error, isloading };
+  return { Genres: genres, Error: null, isloading: null };
 };
 
 export default UseGenre;
