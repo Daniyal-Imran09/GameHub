@@ -13,7 +13,7 @@ interface Props {
 }
 const GameGrid = ({ game }: Props) => {
   const { gameslist, Error, isloading } = UseGame(game);
-  const skeletons = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6];
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return (
     <>
       {Error && <Text>{Error}</Text>}
