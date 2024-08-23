@@ -10,7 +10,7 @@ const GameHeading = ({ game }: Props) => {
     game.genre?.name || ""
   } Games`;
   return (
-    <Heading as={"h1"} marginBottom={5}>
+    <Heading as={"h1"} marginBottom={5} fontSize={"5xl"}>
       {heading}
     </Heading>
   );
