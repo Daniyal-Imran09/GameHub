@@ -37,6 +37,7 @@ const UseGame = (game: GameQuery) => {
           genres: game.genre?.id,
           platforms: game.platform?.id,
           ordering: game.selectedorder,
+          search: game.searchtext,
         },
       })
       .then((res) => {
