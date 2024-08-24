@@ -1,41 +1,46 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
+import { AxiosRequestConfig, CanceledError } from "axios";
 
-interface Genre {
-  id: number;
-  name: string;
-}
-
-interface FetchGenresResponse {
+interface FetchDataResponse<T> {
   count: number;
-  results: Genre[];
+  results: T[];
 }
-const UseGenre = () => {
-  const [Genres, setGenres] = useState<Genre[]>([]);
+const UseData = <T,>(
+  endpoint: string,
+  requestconfig?: AxiosRequestConfig,
+  deps?: any[]
+) => {
+  const [Data, setData] = useState<T[]>([]);
 
   const [Error, SetError] = useState("");
   const [isloading, setisloading] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    setisloading(true);
-    apiClient
-      .get<FetchGenresResponse>("/genres", { signal: controller.signal })
-      .then((res) => {
-        setGenres(res.data.results);
-        setisloading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        SetError(err.message);
-        setisloading(false);
-      });
+  useEffect(
+    () => {
+      const controller = new AbortController();
+      setisloading(true);
+      apiClient
+        .get<FetchDataResponse<T>>(endpoint, {
+          signal: controller.signal,
+          ...requestconfig,
+        })
+        .then((res) => {
+          setData(res.data.results);
+          setisloading(false);
+        })
+        .catch((err) => {
+          if (err instanceof CanceledError) return;
+          SetError(err.message);
+          setisloading(false);
+        });
 
-    return () => controller.abort();
-  }, []);
+      return () => controller.abort();
+    },
+    deps ? [...deps] : []
+  );
 
-  return { Genres, Error, isloading };
+  return { Data, Error, isloading };
 };
 
-export default UseGenre;
+export default UseData;

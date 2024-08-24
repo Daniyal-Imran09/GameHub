@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
+import UseData from "./UseData";
+import { GameQuery } from "../App";
 
 export interface Platform {
   id: number;
@@ -13,33 +15,34 @@ interface FetchPlatform {
   results: Platform[];
 }
 
-const usePlatform = () => {
-  const [Platform, setPlatform] = useState<Platform[]>([]);
+// const usePlatform = () => {
+//   const [Platform, setPlatform] = useState<Platform[]>([]);
 
-  const [Error, SetError] = useState("");
-  const [isloading, setisloading] = useState(false);
+//   const [Error, SetError] = useState("");
+//   const [isloading, setisloading] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    setisloading(true);
-    apiClient
-      .get<FetchPlatform>("/platforms/lists/parents", {
-        signal: controller.signal,
-      })
-      .then((res) => {
-        setPlatform(res.data.results);
-        setisloading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        SetError(err.message);
-        setisloading(false);
-      });
+//   useEffect(() => {
+//     const controller = new AbortController();
+//     setisloading(true);
+//     apiClient
+//       .get<FetchPlatform>("/platforms/lists/parents", {
+//         signal: controller.signal,
+//       })
+//       .then((res) => {
+//         setPlatform(res.data.results);
+//         setisloading(false);
+//       })
+//       .catch((err) => {
+//         if (err instanceof CanceledError) return;
+//         SetError(err.message);
+//         setisloading(false);
+//       });
 
-    return () => controller.abort();
-  }, []);
+//     return () => controller.abort();
+//   }, []);
 
-  return { Platform, Error, isloading };
-};
+//   return { Platform, Error, isloading };
+// };
 
+const usePlatform = () => UseData<Platform>("/platforms/lists/parents");
 export default usePlatform;
