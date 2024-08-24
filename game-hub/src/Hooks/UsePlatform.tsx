@@ -3,6 +3,7 @@ import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
 import UseData from "./UseData";
 import { GameQuery } from "../App";
+import Platforms from "../data/Platforms";
 
 export interface Platform {
   id: number;
@@ -44,5 +45,5 @@ interface FetchPlatform {
 //   return { Platform, Error, isloading };
 // };
 
-const usePlatform = () => UseData<Platform>("/platforms/lists/parents");
+const usePlatform = () => ({ Data: Platforms, Error: null, isloading: false });
 export default usePlatform;
