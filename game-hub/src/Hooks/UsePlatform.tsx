@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
-import UseData from "./UseData";
+import UseData, { FetchDataResponse } from "./UseData";
 import { GameQuery } from "../App";
 import Platforms from "../data/Platforms";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Platform {
   id: number;
@@ -11,39 +12,14 @@ export interface Platform {
   slug: string;
 }
 
-interface FetchPlatform {
-  count: number;
-  results: Platform[];
-}
-
-// const usePlatform = () => {
-//   const [Platform, setPlatform] = useState<Platform[]>([]);
-
-//   const [Error, SetError] = useState("");
-//   const [isloading, setisloading] = useState(false);
-
-//   useEffect(() => {
-//     const controller = new AbortController();
-//     setisloading(true);
-//     apiClient
-//       .get<FetchPlatform>("/platforms/lists/parents", {
-//         signal: controller.signal,
-//       })
-//       .then((res) => {
-//         setPlatform(res.data.results);
-//         setisloading(false);
-//       })
-//       .catch((err) => {
-//         if (err instanceof CanceledError) return;
-//         SetError(err.message);
-//         setisloading(false);
-//       });
-
-//     return () => controller.abort();
-//   }, []);
-
-//   return { Platform, Error, isloading };
-// };
-
-const usePlatform = () => ({ Data: Platforms, Error: null, isloading: false });
+const usePlatform = () =>
+  useQuery({
+    queryKey: ["platforms"],
+    queryFn: () =>
+      apiClient
+        .get<FetchDataResponse<Platform>>("/platforms/lists/parents")
+        .then((res) => res.data),
+    staleTime: 24 * 60 * 60 * 1000, //24h
+    initialData: { count: Platforms.length, results: Platforms },
+  });
 export default usePlatform;
