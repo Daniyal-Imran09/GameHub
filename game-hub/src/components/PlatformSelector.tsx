@@ -6,10 +6,13 @@ import { Platform } from "../Hooks/UsePlatform";
 
 interface Props {
   onselectplatform: (platform: Platform) => void;
-  selectedplatform: Platform | null;
+  selectedplatformId?: number;
 }
-const PlatformSelector = ({ onselectplatform, selectedplatform }: Props) => {
+const PlatformSelector = ({ onselectplatform, selectedplatformId }: Props) => {
   const { data, error, isLoading } = usePlatform();
+  const selectedplatform = data?.results.find(
+    (p) => p.id === selectedplatformId
+  );
   if (error) return null;
   return (
     <Menu>
