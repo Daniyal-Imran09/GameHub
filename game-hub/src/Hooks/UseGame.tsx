@@ -4,12 +4,8 @@ import { CanceledError } from "axios";
 import { Genre } from "./UseGenre";
 import { GameQuery } from "../App";
 import { useQuery } from "@tanstack/react-query";
+import { Platform } from "./UsePlatform";
 
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
 export interface Games {
   id: number;
   name: string;

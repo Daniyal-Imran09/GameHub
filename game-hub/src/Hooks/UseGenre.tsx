@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
+import apiClient, { FetchDataResponse } from "../services/api-client";
 import axios, { CanceledError } from "axios";
 
 import genres from "../data/Genre";
 import { useQuery } from "@tanstack/react-query";
-import { FetchDataResponse } from "./UseData";
 
 export interface Genre {
   id: number;
