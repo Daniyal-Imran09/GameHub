@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
+import apiClient, { FetchDataResponse } from "../services/api-client";
 import { CanceledError } from "axios";
 import { Genre } from "./UseGenre";
 import { GameQuery } from "../App";
-import UseData from "./UseData";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Platform {
   id: number;
@@ -17,11 +17,6 @@ export interface Games {
   parent_platforms: { platform: Platform }[];
   metacritic: number;
   rating_top: number;
-}
-
-interface Fetchgames {
-  count: number;
-  results: Games[];
 }
 
 // const UseGame = (game: GameQuery) => {
@@ -59,16 +54,19 @@ interface Fetchgames {
 // };
 
 const useGame = (game: GameQuery) =>
-  UseData<Games>(
-    "/games",
-    {
-      params: {
-        genres: game.genre?.id,
-        platforms: game.platform?.id,
-        ordering: game.selectedorder,
-        search: game.searchtext,
-      },
-    },
-    [game]
-  );
+  useQuery<FetchDataResponse<Games>, Error>({
+    queryKey: ["key", game],
+    queryFn: () =>
+      apiClient
+        .get<FetchDataResponse<Games>>("/games", {
+          params: {
+            genres: game.genre?.id,
+            parent_platforms: game.platform?.id,
+            ordering: game.selectedorder,
+            search: game.searchtext,
+          },
+        })
+        .then((res) => res.data),
+  });
+
 export default useGame;

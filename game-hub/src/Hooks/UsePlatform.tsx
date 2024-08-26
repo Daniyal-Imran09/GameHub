@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
+import apiClient, { FetchDataResponse } from "../services/api-client";
 import { CanceledError } from "axios";
-import UseData, { FetchDataResponse } from "./UseData";
 import { GameQuery } from "../App";
 import Platforms from "../data/Platforms";
 import { useQuery } from "@tanstack/react-query";
