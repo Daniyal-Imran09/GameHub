@@ -3,7 +3,7 @@ import ApiClient, { FetchDataResponse } from "../services/api-client";
 import { CanceledError } from "axios";
 import { Genre } from "./UseGenre";
 import { GameQuery } from "../App";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Platform } from "./UsePlatform";
 
 const apiclient = new ApiClient<Games>("/games");
@@ -51,17 +51,22 @@ export interface Games {
 // };
 
 const useGame = (game: GameQuery) =>
-  useQuery<FetchDataResponse<Games>, Error>({
+  useInfiniteQuery<FetchDataResponse<Games>, Error>({
     queryKey: ["games", game],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       apiclient.getAll({
         params: {
           genres: game.genre?.id,
           parent_platforms: game.platform?.id,
           ordering: game.selectedorder,
           search: game.searchtext,
+          page: pageParam,
         },
       }),
+    getNextPageParam: (lastpage, allpages) => {
+      return lastpage.next ? allpages.length + 1 : undefined;
+    },
+    staleTime: 24 * 60 * 60 * 1000,
   });
 
 export default useGame;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import ApiClient from "../services/api-client";
+import ApiClient, { FetchDataResponse } from "../services/api-client";
 import axios, { CanceledError } from "axios";
-
 import genres from "../data/Genre";
 import { useQuery } from "@tanstack/react-query";
 
@@ -11,13 +10,9 @@ export interface Genre {
   image_background: string;
 }
 
-interface FetchGenresResponse {
-  count: number;
-  results: Genre[];
-}
 const apiclient = new ApiClient<Genre>("/genres");
 const UseGenre = () =>
-  useQuery({
+  useQuery<FetchDataResponse<Genre>, Error>({
     queryKey: ["Genres"],
     queryFn: apiclient.getAll,
     staleTime: 24 * 60 * 60 * 1000, //24h
