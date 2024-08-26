@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import apiClient, { FetchDataResponse } from "../services/api-client";
+import ApiClient from "../services/api-client";
 import axios, { CanceledError } from "axios";
 
 import genres from "../data/Genre";
@@ -15,13 +15,11 @@ interface FetchGenresResponse {
   count: number;
   results: Genre[];
 }
+const apiclient = new ApiClient<Genre>("/genres");
 const UseGenre = () =>
   useQuery({
     queryKey: ["Genres"],
-    queryFn: () =>
-      apiClient
-        .get<FetchDataResponse<Genre>>("/genres")
-        .then((res) => res.data),
+    queryFn: apiclient.getAll,
     staleTime: 24 * 60 * 60 * 1000, //24h
     initialData: { count: genres.length, results: genres },
   });
