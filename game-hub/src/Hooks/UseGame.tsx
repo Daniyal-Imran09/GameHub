@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import ApiClient, { FetchDataResponse } from "../services/api-client";
 import { CanceledError } from "axios";
 import { Genre } from "./UseGenre";
-import { GameQuery } from "../App";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Platform } from "./UsePlatform";
 import ms from "ms";
+import useGameQueryStore from "../store";
 
 const apiclient = new ApiClient<Games>("/games");
 export interface Games {
@@ -17,8 +17,9 @@ export interface Games {
   rating_top: number;
 }
 
-const useGame = (game: GameQuery) =>
-  useInfiniteQuery<FetchDataResponse<Games>, Error>({
+const useGame = () => {
+  const game = useGameQueryStore((S) => S.game);
+  return useInfiniteQuery<FetchDataResponse<Games>, Error>({
     queryKey: ["games", game],
     queryFn: ({ pageParam = 1 }) =>
       apiclient.getAll({
@@ -35,5 +36,6 @@ const useGame = (game: GameQuery) =>
     },
     staleTime: ms("24h"),
   });
+};
 
 export default useGame;

@@ -4,12 +4,11 @@ import React from "react";
 import usePlatform from "../Hooks/UsePlatform";
 import { Platform } from "../Hooks/UsePlatform";
 import usePlatforms from "../Hooks/usePlatforms";
+import useGameQueryStore from "../store";
 
-interface Props {
-  onselectplatform: (platform: Platform) => void;
-  selectedplatformId?: number;
-}
-const PlatformSelector = ({ onselectplatform, selectedplatformId }: Props) => {
+const PlatformSelector = () => {
+  const selectedplatformId = useGameQueryStore((s) => s.game.platformId);
+  const setselectedplatformId = useGameQueryStore((S) => S.setPlatformId);
   const { data, error, isLoading } = usePlatform();
   const selectedplatform = usePlatforms(selectedplatformId);
   if (error) return null;
@@ -20,7 +19,7 @@ const PlatformSelector = ({ onselectplatform, selectedplatformId }: Props) => {
       </MenuButton>
       <MenuList>
         {data?.results.map((p) => (
-          <MenuItem key={p.id} onClick={() => onselectplatform(p)}>
+          <MenuItem key={p.id} onClick={() => setselectedplatformId(p.id)}>
             {p.name}
           </MenuItem>
         ))}
