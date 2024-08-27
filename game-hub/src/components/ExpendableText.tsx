@@ -13,7 +13,7 @@ const ExpendableText = ({ children }: Props) => {
   const summary = expanded ? children : children.substring(0, limit) + "...";
   return (
     <Text>
-      {summary}{" "}
+      {summary}
       <Button
         size={"xs"}
         fontWeight={"bold"}
