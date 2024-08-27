@@ -6,6 +6,7 @@ import ExpendableText from "./ExpendableText";
 import DefinitionItem from "./DefinitionItem";
 import CriticScore from "./CriticScore";
 import GameAttributes from "./GameAttributes";
+import GameTrailer from "./GameTrailer";
 
 const GameDetailPage = () => {
   const { slug } = useParams();
@@ -19,6 +20,7 @@ const GameDetailPage = () => {
       <Heading>{game.name}</Heading>
       <ExpendableText>{game.description_raw}</ExpendableText>
       <GameAttributes game={game} />
+      <GameTrailer gameid={game.id} />
     </>
   );
 };
