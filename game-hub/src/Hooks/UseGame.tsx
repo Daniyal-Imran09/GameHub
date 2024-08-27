@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ApiClient, { FetchDataResponse } from "../services/api-client";
 import { CanceledError } from "axios";
-import { Genre } from "./UseGenre";
+import { Genre } from "../entities/Genre";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { Platform } from "./UsePlatform";
 import ms from "ms";
 import useGameQueryStore from "../store";
+import { Games } from "../entities/Games";
 
 const apiclient = new ApiClient<Games>("/games");
-export interface Games {
-  id: number;
-  name: string;
-  slug: string;
-  description_raw: string;
-  background_image: string;
-  parent_platforms: { platform: Platform }[];
-  metacritic: number;
-  rating_top: number;
-}
-
 const useGame = () => {
   const game = useGameQueryStore((S) => S.game);
   return useInfiniteQuery<FetchDataResponse<Games>, Error>({

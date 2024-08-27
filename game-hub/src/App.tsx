@@ -12,10 +12,11 @@ import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
 import { useState } from "react";
-import UseGenre, { Genre } from "./Hooks/UseGenre";
+import UseGenre from "./Hooks/UseGenre";
+import { Genre } from "./entities/Genre";
 import PlaformSelector from "./components/PlatformSelector";
 import PlatformSelector from "./components/PlatformSelector";
-import { Platform } from "./Hooks/UsePlatform";
+import { Platform } from "./entities/Platform";
 import SortSelector from "./components/SortSelector";
 import GameHeading from "./components/GameHeading";
 

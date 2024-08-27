@@ -1,5 +1,5 @@
 import React from "react";
-import { Games } from "../Hooks/UseGame";
+import { Games } from "../entities/Games";
 import {
   Card,
   CardBody,
@@ -12,7 +12,8 @@ import {
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
 import getCroppedImageUrl from "../services/image-url";
-import UseGenre, { Genre } from "../Hooks/UseGenre";
+import UseGenre from "../Hooks/UseGenre";
+import { Genre } from "../entities/Genre";
 import Emoji from "./Emoji";
 import { Link } from "react-router-dom";
 

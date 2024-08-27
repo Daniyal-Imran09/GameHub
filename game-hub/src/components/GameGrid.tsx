@@ -5,7 +5,7 @@ import UseGame from "../Hooks/UseGame";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
-import { Genre } from "../Hooks/UseGenre";
+import { Genre } from "../entities/Genre";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import useGameQueryStore from "../store";

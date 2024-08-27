@@ -4,14 +4,9 @@ import { CanceledError } from "axios";
 import Platforms from "../data/Platforms";
 import { useQuery } from "@tanstack/react-query";
 import ms from "ms";
+import { Platform } from "../entities/Platform";
 
 const apiclient = new ApiClient<Platform>("/platforms/lists/parents");
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
-
 const usePlatform = () =>
   useQuery<FetchDataResponse<Platform>, Error>({
     queryKey: ["platforms"],
