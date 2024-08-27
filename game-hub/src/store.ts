@@ -31,9 +31,9 @@ interface GameQuery {
           searchText: undefined,
         },
       })),
-    setSortOrder: (sortOrder) =>
+    setSortOrder: (selectedorder) =>
       set((store) => ({
-        game: { ...store.game, sortOrder },
+        game: { ...store.game, selectedorder },
       })),
   }));
   

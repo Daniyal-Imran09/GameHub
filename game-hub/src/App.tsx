@@ -36,9 +36,6 @@ function App() {
         lg: "200px 1fr",
       }}
     >
-      <GridItem area={"nav"}>
-        <NavBar />
-      </GridItem>
       <Show above="lg">
         <GridItem area={"aside"} padding={"5px"}>
           <GenreList />
