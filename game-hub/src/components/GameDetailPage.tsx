@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useGames from "../Hooks/useGames";
-import { Heading, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
+import { GridItem, Heading, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
 import ExpendableText from "./ExpendableText";
 import DefinitionItem from "./DefinitionItem";
 import CriticScore from "./CriticScore";
@@ -17,13 +17,17 @@ const GameDetailPage = () => {
   if (error || !game) throw error;
 
   return (
-    <>
-      <Heading>{game.name}</Heading>
-      <ExpendableText>{game.description_raw}</ExpendableText>
-      <GameAttributes game={game} />
-      <GameTrailer gameid={game.id} />
-      <GameScreenshots gameId={game.id} />
-    </>
+    <SimpleGrid columns={{ base: 1, md: 2 }}>
+      <GridItem>
+        <Heading>{game.name}</Heading>
+        <ExpendableText>{game.description_raw}</ExpendableText>
+        <GameAttributes game={game} />
+      </GridItem>
+      <GridItem>
+        <GameTrailer gameid={game.id} />
+        <GameScreenshots gameId={game.id} />
+      </GridItem>
+    </SimpleGrid>
   );
 };
 
